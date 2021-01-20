@@ -1,9 +1,10 @@
-package geekbrains.mariaL.kotlinapp
+package geekbrains.mariaL.kotlinapp.ui
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import geekbrains.mariaL.kotlinapp.R
 
 class MyAlertDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
