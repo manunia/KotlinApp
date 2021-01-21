@@ -1,10 +1,12 @@
 package geekbrains.mariaL.kotlinapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.databinding.ActivityMainBinding
+import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +25,17 @@ class MainActivity : AppCompatActivity() {
         adapter = MainAdapter()
         ui.mainRecycler.adapter = adapter
 
+        ui.addNoteButton.setOnClickListener{
+//            val dialog = MyAlertDialog()
+//            val manager = supportFragmentManager
+//            dialog.show(manager, getString(R.string.message))
+            val intent: Intent = Intent("showNoteRedactor")
+            startActivityForResult(intent, 89)
+        }
+
         viewModel.viewState().observe(this, Observer<MainViewState> { state ->
             state?.let { adapter.notes = state.notes }
         })
     }
+
 }

@@ -3,4 +3,7 @@
     <string name="add">Добавить заметку</string>
     <string name="message">Заметка сохранена.</string>
     <string name="title">Важное сообщение!</string>
+    <string name="creation_date">creation date</string>
+    <string name="note_title">Note title</string>
+    <string name="severity">Severity</string>
 </resources>
