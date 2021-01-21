@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import geekbrains.mariaL.kotlinapp.R
+import geekbrains.mariaL.kotlinapp.databinding.ItemNoteBinding
 import geekbrains.mariaL.kotlinapp.model.Note
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.NoteViewHolder>() {
@@ -28,13 +29,13 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.NoteViewHolder>() {
     }
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title = itemView.findViewById<TextView>(R.id.title)
-        private val body = itemView.findViewById<TextView>(R.id.body)
-
+        val ui: ItemNoteBinding = ItemNoteBinding.bind(itemView)
         fun bind(note: Note) {
-            title.text = note.title
-            body.text = note.note
-            itemView.setBackgroundColor(note.color)
+            with(note) {
+                ui.title.text = this.title
+                ui.body.text = this.note
+                itemView.setBackgroundColor(this.color)
+            }
         }
     }
 }
