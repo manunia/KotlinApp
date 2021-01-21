@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
         ui.mainRecycler.adapter = adapter
 
         ui.addNoteButton.setOnClickListener{
-//            val dialog = MyAlertDialog()
-//            val manager = supportFragmentManager
-//            dialog.show(manager, getString(R.string.message))
             val intent: Intent = Intent("showNoteRedactor")
             startActivityForResult(intent, 89)
         }
