@@ -1,3 +1,5 @@
 package geekbrains.mariaL.kotlinapp.model
 
-class Note (val title: String, val severity: Int, val date: String, val summary: String, val note: String, val color: Int)
+import java.io.Serializable
+
+class Note (val title: String, val severity: String, val date: String, val summary: String, val note: String, val color: Int) : Serializable

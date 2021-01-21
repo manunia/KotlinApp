@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         ui.mainRecycler.adapter = adapter
 
         ui.addNoteButton.setOnClickListener{
-            val intent: Intent = Intent("showNoteRedactor")
+            val intent = Intent("showNoteRedactor")
             startActivityForResult(intent, 89)
         }
 
