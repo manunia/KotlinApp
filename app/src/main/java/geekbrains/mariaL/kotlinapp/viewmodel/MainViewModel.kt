@@ -14,4 +14,6 @@ class MainViewModel: ViewModel() {
     }
 
     fun viewState(): LiveData<MainViewState> = viewStateLiveData
+
+
 }

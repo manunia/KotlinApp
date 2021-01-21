@@ -1,7 +1,7 @@
 package geekbrains.mariaL.kotlinapp.model
 
 object Repository {
-    var notes: List<Note> = listOf(
+    var notes: List<Note> = arrayListOf(
                 Note("Моя первая заметка",
                         1,
                         "01.01.2020",
@@ -33,4 +33,6 @@ object Repository {
                         "Kotlin очень краткий, но при этом выразительный язык",
                         0xfff06292.toInt())
                 )
+
+
 }
