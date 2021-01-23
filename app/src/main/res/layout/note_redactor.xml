@@ -1,94 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TableLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-
-        <TableRow
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/note_title" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <EditText
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="15"
-                android:enabled="true"
-                android:inputType="textPersonName"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/creation_date" />
-
-            <EditText
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="15"
-                android:enabled="false"
-                android:inputType="textPersonName"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/severity" />
-
-            <EditText
-                android:id="@+id/severity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="15"
-                android:enabled="true"
-                android:inputType="textPersonName"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark" />
-        </TableRow>
-
-    </TableLayout>
-    <EditText
-        android:id="@+id/note"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:inputType="textPersonName"
-        android:text="Enter note text"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark" />
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Save"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/note_title" />
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="15"
+                    android:enabled="true"
+                    android:inputType="textPersonName"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/creation_date" />
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="15"
+                    android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/severity" />
+
+                <EditText
+                    android:id="@+id/severity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="15"
+                    android:enabled="true"
+                    android:inputType="textPersonName"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark" />
+            </TableRow>
+
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:inputType="textPersonName"
+            android:hint="Enter note text"
+            android:background="@null"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="Save" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
