@@ -49,7 +49,7 @@ class MainAdapter(private val onClick: OnItemClickListener) : RecyclerView.Adapt
                     Color.BLUE -> R.color.color_blue
                 }
 
-                itemView.setBackgroundColor(color)
+                itemView.setBackgroundResource(color)
                 itemView.setOnClickListener { onClick.onItemClick(note) }
             }
         }
