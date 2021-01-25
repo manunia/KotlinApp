@@ -7,6 +7,7 @@ import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.ItemNoteBinding
 import geekbrains.mariaL.kotlinapp.model.Color
 import geekbrains.mariaL.kotlinapp.model.Note
+import geekbrains.mariaL.kotlinapp.model.Severity
 
 interface OnItemClickListener {
     fun onItemClick(note: Note)

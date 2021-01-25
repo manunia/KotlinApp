@@ -7,4 +7,10 @@
     <string name="note_title">Note title</string>
     <string name="severity">Severity</string>
     <string name="new_note_title">New note</string>
+
+    <string name="very_high">very high</string>
+    <string name="high">high</string>
+    <string name="middle">middle</string>
+    <string name="low">low</string>
+    <string name="not_matter">not matter</string>
 </resources>

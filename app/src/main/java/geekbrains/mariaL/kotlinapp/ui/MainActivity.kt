@@ -29,17 +29,17 @@ class MainActivity : AppCompatActivity() {
         })
         ui.mainRecycler.adapter = adapter
 
-        ui.addNoteButton.setOnClickListener{
-            val intent = Intent("showNoteRedactor")
-            startActivityForResult(intent, 89)
-        }
-
         viewModel.viewState().observe(this, Observer<MainViewState> { state ->
             state?.let { adapter.notes = state.notes }
         })
+
+        ui.fab.setOnClickListener{
+            openNoteRedactor()
+        }
+
     }
 
-    private fun openNoteRedactor(note: Note) {
+    private fun openNoteRedactor(note: Note? = null) {
         startActivity(NoteRedactorActivity.getStartIntent(this, note))
     }
 

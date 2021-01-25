@@ -109,12 +109,6 @@
             android:background="@null"
             android:textColor="@color/colorPrimaryDark" />
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:text="Save" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
