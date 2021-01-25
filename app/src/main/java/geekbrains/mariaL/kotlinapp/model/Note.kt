@@ -21,24 +21,28 @@ data class Note (
         other as Note
 
         if (id != other.id) return false
-        if (title != other.title) return false
-        if (severity != other.severity) return false
-        if (modifyDate != other.modifyDate) return false
-        if (summary != other.summary) return false
-        if (note != other.note) return false
-        if (color != other.color) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + title.hashCode()
-        result = 31 * result + severity.hashCode()
-        result = 31 * result + modifyDate.hashCode()
-        result = 31 * result + summary.hashCode()
-        result = 31 * result + note.hashCode()
-        result = 31 * result + color
-        return result
+        return id.hashCode()
     }
 }
+
+enum class Color {
+    WHITE,
+    YELLOW,
+    GREEN,
+    BLUE,
+    RED,
+    VIOLET,
+    PINK
+}
+ enum class Severity {
+     WERY_HIGHT,
+     HIGHT,
+     MIDDLE,
+     LOW,
+     NOT_MATTER
+ }
