@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.databinding.ActivityMainBinding
+import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(ui.toolbar)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        adapter = MainAdapter()
+        adapter = MainAdapter(object: OnItemClickListener {
+            override fun onItemClick(note: Note) {
+                openNoteRedactor(note)
+            }
+        })
         ui.mainRecycler.adapter = adapter
 
         ui.addNoteButton.setOnClickListener{
@@ -32,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.viewState().observe(this, Observer<MainViewState> { state ->
             state?.let { adapter.notes = state.notes }
         })
+    }
+
+    private fun openNoteRedactor(note: Note) {
+        startActivity(NoteRedactorActivity.getStartIntent(this, note))
     }
 
 }

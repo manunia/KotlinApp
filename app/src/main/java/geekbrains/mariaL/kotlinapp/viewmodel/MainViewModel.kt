@@ -15,7 +15,5 @@ class MainViewModel: ViewModel() {
 
     fun viewState(): LiveData<MainViewState> = viewStateLiveData
 
-    fun addNote(title: String, severity: String, date: String, summary: String, note: String, color: Int) {
-        Repository.addNote(title, severity, date, summary, note, color)
-    }
+
 }

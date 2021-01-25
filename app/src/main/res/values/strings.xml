@@ -6,4 +6,5 @@
     <string name="creation_date">creation date</string>
     <string name="note_title">Note title</string>
     <string name="severity">Severity</string>
+    <string name="new_note_title">New note</string>
 </resources>

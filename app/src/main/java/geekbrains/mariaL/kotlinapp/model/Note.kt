@@ -8,11 +8,12 @@ import java.util.*
 data class Note (
         val id: String,
         val title: String,
-        val severity: String,
+        val severity: Severity = Severity.MIDDLE,
         val modifyDate: Date = Date(),
         val summary: String,
         val note: String,
-        val color: Int) : Parcelable {
+        val color: Color = Color.WHITE
+) : Parcelable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -39,6 +40,7 @@ enum class Color {
     VIOLET,
     PINK
 }
+
  enum class Severity {
      WERY_HIGHT,
      HIGHT,
