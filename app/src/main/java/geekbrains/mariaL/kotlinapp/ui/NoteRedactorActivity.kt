@@ -108,16 +108,6 @@ class NoteRedactorActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun createNewNote(): Note = Note(
-            UUID.randomUUID().toString(),
-            ui.title.text.toString(),
-            Severity.NOT_MATTER,
-            Date(),
-            ui.note.text.toString(),
-            ui.note.text.toString()
-    )
-
-
     private fun triggerSaveNote() {
         if (ui.title.text == null || ui.title.text!!.length < 3) return
 
@@ -126,7 +116,7 @@ class NoteRedactorActivity : AppCompatActivity() {
                 note = note?.copy(title = ui.title.text.toString(),
                         note = ui.note.text.toString(),
                         modifyDate = Date())
-                        ?: createNewNote()
+                        ?: viewModel.createNewNote()
 
                 if (note != null) viewModel.saveChanges(note!!)
             }
