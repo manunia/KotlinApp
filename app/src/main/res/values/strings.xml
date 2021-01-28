@@ -13,4 +13,5 @@
     <string name="middle">middle</string>
     <string name="low">low</string>
     <string name="not_matter">not matter</string>
+    <string name="enter_note_text">Enter note text</string>
 </resources>
