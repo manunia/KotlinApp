@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 private const val NOTES_COLLECTION = "notes"
 
@@ -47,6 +48,7 @@ class FireStoreProvider : RemoteDataProvider {
                 .addOnFailureListener { ex ->
                     result.value = NoteResult.Error(ex)
                 }
+        return result
     }
 
     override fun saveNote(note: Note): LiveData<NoteResult> {
