@@ -2,14 +2,12 @@ package geekbrains.mariaL.kotlinapp.ui
 
 import android.content.Context
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.NoteRedactorBinding
@@ -21,32 +19,32 @@ import java.util.*
 
 private const val SAVE_DELAY = 2000L
 
-class NoteRedactorActivity : AppCompatActivity() {
+class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
 
     companion object {
         const val EXTRA_NOTE = "NoteRedactorActivity.extra.NOTE"
 
-        fun getStartIntent(context: Context, note: Note?): Intent {
+        fun getStartIntent(context: Context, noteId: String?): Intent {
             val intent = Intent(context, NoteRedactorActivity::class.java)
-            intent.putExtra(EXTRA_NOTE, note)
+            intent.putExtra(EXTRA_NOTE, noteId)
             return intent
         }
     }
 
     private var note: Note? = null
     lateinit var ui: NoteRedactorBinding
-    private lateinit var viewModel: NoteViewModel
+    override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val layoutRes: Int = R.layout.note_redactor
+
     private val textChangeListener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             triggerSaveNote()
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
         }
 
     }
@@ -54,19 +52,14 @@ class NoteRedactorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ui = NoteRedactorBinding.inflate(layoutInflater)
-        setContentView(ui.root)
 
-        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
-
-        note = intent.getParcelableExtra(EXTRA_NOTE)
-        setSupportActionBar(findViewById(R.id.toolbar))
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = if (note != null) {
-            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(note!!.modifyDate)
-        } else {
-            getString(R.string.new_note_title)
+        val noteId = intent.getStringExtra(EXTRA_NOTE,)
+        noteId?.let {
+            viewModel.loadNote(it)
         }
+
+        if (noteId == null ) supportActionBar?.title = getString(R.string.new_note_title)
+
         initView()
     }
 
@@ -116,12 +109,16 @@ class NoteRedactorActivity : AppCompatActivity() {
                 note = note?.copy(title = ui.title.text.toString(),
                         note = ui.note.text.toString(),
                         modifyDate = Date())
-                        ?: viewModel.createNewNote()
+                        ?: viewModel.
 
                 if (note != null) viewModel.saveChanges(note!!)
             }
 
         }, SAVE_DELAY)
+    }
+
+    override fun renderData(data: Note?) {
+        initView()
     }
 
 }

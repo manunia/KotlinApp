@@ -2,21 +2,42 @@ package geekbrains.mariaL.kotlinapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import geekbrains.mariaL.kotlinapp.model.Note
+import geekbrains.mariaL.kotlinapp.model.NoteResult
 import geekbrains.mariaL.kotlinapp.model.Repository
 import geekbrains.mariaL.kotlinapp.ui.MainViewState
 
-class MainViewModel: ViewModel() {
-    private val viewStateLiveData: MutableLiveData<MainViewState> = MutableLiveData()
+class MainViewModel(val repository: Repository = Repository) :
+        BaseViewModel<List<Note>?, MainViewState>() {
 
-    init {
-        Repository.getNotes().observeForever {
-            viewStateLiveData.value =
-                    viewStateLiveData.value?.copy(notes = it!!) ?: MainViewState(it!!)
+    private val notesObserver = object : Observer<NoteResult> {
+        //Стандартный обсервер LiveData
+        override fun onChanged(t: NoteResult?) {
+            if (t == null) return
+
+            when (t) {
+                is NoteResult.Success<*> -> {
+                    viewStateLiveData.value = MainViewState(notes = t.data as? List<Note>)
+                }
+                is NoteResult.Error -> {
+                    viewStateLiveData.value = MainViewState(error = t.error)
+                }
+            }
         }
     }
 
-    fun viewState(): LiveData<MainViewState> = viewStateLiveData
+    private val repositoryNotes = repository.getNotes()
+
+    init {
+        viewStateLiveData.value = MainViewState()
+        repositoryNotes.observeForever(notesObserver)
+    }
+
+    override fun onCleared() {
+        repositoryNotes.removeObserver(notesObserver)
+    }
 
 
 }

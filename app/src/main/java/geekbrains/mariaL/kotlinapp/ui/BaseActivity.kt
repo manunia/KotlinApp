@@ -9,7 +9,7 @@ import geekbrains.mariaL.kotlinapp.viewmodel.BaseViewModel
 abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
 
     abstract val viewModel : BaseViewModel<T, VS>
-    abstract val layourRes: Int
+    abstract val layoutRes: Int
     abstract val ui: ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
