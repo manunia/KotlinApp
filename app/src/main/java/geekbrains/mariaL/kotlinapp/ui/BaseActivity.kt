@@ -16,18 +16,16 @@ abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(ui.root)
 
-        viewModel.getViewState().observe(this, object : Observer<VS> {
-            override fun onChanged(t: VS) {
-                if (t == null) return
-                if (t.data != null) renderData(t.data)
-                if (t.error != null) renderError(t.error)
+        viewModel.getViewState().observe(this) { t ->
+            t?.apply {
+                data?.let { renderData(it) }
+                error?.let { renderError(it) }
             }
-        })
-
+        }
     }
 
     protected fun renderError(error: Throwable) {
-        if (error.message != null) showError(error.message!!)
+        error.message?.let { showError(it) }
     }
 
     abstract fun renderData(data: T)
@@ -35,6 +33,4 @@ abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
     protected fun showError(error: String) {
         MyAlertDialogBuilder(this, "Error!", error).build()
     }
-
-
 }
