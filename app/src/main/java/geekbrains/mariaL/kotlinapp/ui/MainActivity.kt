@@ -9,22 +9,27 @@ import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
 
-    override val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    override val viewModel: MainViewModel
+            by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+
+    override val ui: ActivityMainBinding
+            by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override val layoutRes: Int = R.layout.activity_main
-    private lateinit var adapter: MainAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ui = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(ui.root)
-
-        setSupportActionBar(ui.toolbar)
-
-        adapter = MainAdapter(object : OnItemClickListener {
+    val adapter: MainAdapter by lazy {
+        MainAdapter(object : OnItemClickListener {
             override fun onItemClick(note: Note) {
                 openNoteRedactor(note)
             }
         })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(ui.root)
+
+        setSupportActionBar(ui.toolbar)
+
         ui.mainRecycler.adapter = adapter
 
         ui.fab.setOnClickListener {

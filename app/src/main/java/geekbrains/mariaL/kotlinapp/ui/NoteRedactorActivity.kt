@@ -32,8 +32,10 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private var note: Note? = null
-    lateinit var ui: NoteRedactorBinding
-    override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val viewModel: NoteViewModel
+            by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val ui: NoteRedactorBinding
+            by lazy { NoteRedactorBinding.inflate(layoutInflater) }
     override val layoutRes: Int = R.layout.note_redactor
 
     private val textChangeListener = object : TextWatcher {
@@ -51,43 +53,27 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ui = NoteRedactorBinding.inflate(layoutInflater)
 
-        val noteId = intent.getStringExtra(EXTRA_NOTE,)
+        val noteId = intent.getStringExtra(EXTRA_NOTE)
         noteId?.let {
             viewModel.loadNote(it)
         }
 
-        if (noteId == null ) supportActionBar?.title = getString(R.string.new_note_title)
+        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
 
         initView()
     }
 
     private fun initView() {
-        ui.title.setText(note?.title ?: "")
-        ui.note.setText(note?.note ?: "")
-        val color = when (note?.color) {
-            Color.WHITE -> R.color.color_white
-            Color.VIOLET -> R.color.color_violet
-            Color.YELLOW -> R.color.color_yello
-            Color.RED -> R.color.color_red
-            Color.PINK -> R.color.color_pink
-            Color.GREEN -> R.color.color_green
-            Color.BLUE -> R.color.color_blue
-            else -> R.color.color_white
+        note?.run {
+            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
+            ui.title.setText(title)
+            ui.note.setText(note)
+            ui.severity.setText(severity.getSeverity())
+
+            supportActionBar?.title = modifyDate.format()
         }
 
-        val severity = when (note?.severity) {
-            Severity.WERY_HIGHT -> R.string.very_high
-            Severity.HIGHT -> R.string.high
-            Severity.MIDDLE -> R.string.middle
-            Severity.LOW -> R.string.low
-            Severity.NOT_MATTER -> R.string.not_matter
-            else -> R.string.middle
-        }
-
-        ui.toolbar.setBackgroundColor(resources.getColor(color))
-        ui.severity.setText(resources.getString(severity))
         ui.title.addTextChangedListener(textChangeListener)
         ui.severity.addTextChangedListener(textChangeListener)
         ui.note.addTextChangedListener(textChangeListener)
@@ -109,7 +95,6 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
                 note = note?.copy(title = ui.title.text.toString(),
                         note = ui.note.text.toString(),
                         modifyDate = Date())
-                        ?: viewModel.
 
                 if (note != null) viewModel.saveChanges(note!!)
             }

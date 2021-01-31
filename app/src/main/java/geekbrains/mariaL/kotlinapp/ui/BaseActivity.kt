@@ -8,7 +8,7 @@ import geekbrains.mariaL.kotlinapp.viewmodel.BaseViewModel
 
 abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
 
-    abstract val viewModel : BaseViewModel<T, VS>
+    abstract val viewModel: BaseViewModel<T, VS>
     abstract val layoutRes: Int
     abstract val ui: ViewBinding
 
@@ -33,8 +33,7 @@ abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
     abstract fun renderData(data: T)
 
     protected fun showError(error: String) {
-        val alertDialog = MyAlertDialogBuilder(this, "Error!", error)
-        alertDialog.build()
+        MyAlertDialogBuilder(this, "Error!", error).build()
     }
 
 
