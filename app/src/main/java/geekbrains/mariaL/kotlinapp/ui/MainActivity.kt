@@ -33,13 +33,14 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
         ui.mainRecycler.adapter = adapter
 
         ui.fab.setOnClickListener {
-            openNoteRedactor(Note())
+            openNoteRedactor(null)
         }
 
     }
 
     private fun openNoteRedactor(note: Note?) {
-        startActivity(NoteRedactorActivity.getStartIntent(this, note?.id))
+        val intent = NoteRedactorActivity.getStartIntent(this, note?.id)
+        startActivity(intent)
     }
 
     override fun renderData(data: List<Note>?) {

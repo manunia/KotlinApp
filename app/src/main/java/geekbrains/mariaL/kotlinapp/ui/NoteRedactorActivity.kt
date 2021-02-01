@@ -53,25 +53,24 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val noteId = intent.getStringExtra(EXTRA_NOTE)
+
+        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
         noteId?.let {
             viewModel.loadNote(it)
         }
-
-        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
 
         initView()
     }
 
     private fun initView() {
         note?.run {
-            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
             ui.title.setText(title)
             ui.note.setText(note)
             ui.severity.setText(severity.getSeverity())
-            ui.date.setText(modifyDate.format())
 
+            ui.date.setText(modifyDate.format())
+            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
             supportActionBar?.title = modifyDate.format()
         }
 
@@ -93,9 +92,11 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
 
         Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
             override fun run() {
-                note = note?.copy(title = ui.title.text.toString(),
-                        note = ui.note.text.toString(),
-                        modifyDate = Date())
+                note = note?.copy(
+                    title = ui.title.text.toString(),
+                    note = ui.note.text.toString(),
+                    modifyDate = Date()
+                ) ?: createNewNote()
 
                 if (note != null) viewModel.saveChanges(note!!)
             }
@@ -104,7 +105,14 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     override fun renderData(data: Note?) {
+        note = data
         initView()
     }
+
+    private fun createNewNote(): Note = Note(
+        UUID.randomUUID().toString(),
+        ui.title.text.toString()
+
+    )
 
 }
