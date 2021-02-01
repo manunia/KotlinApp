@@ -33,7 +33,7 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
         ui.mainRecycler.adapter = adapter
 
         ui.fab.setOnClickListener {
-            openNoteRedactor(null)
+            openNoteRedactor(Note())
         }
 
     }

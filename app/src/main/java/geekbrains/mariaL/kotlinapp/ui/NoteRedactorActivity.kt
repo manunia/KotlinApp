@@ -70,6 +70,7 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
             ui.title.setText(title)
             ui.note.setText(note)
             ui.severity.setText(severity.getSeverity())
+            ui.date.setText(modifyDate.format())
 
             supportActionBar?.title = modifyDate.format()
         }
