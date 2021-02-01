@@ -1,4 +1,8 @@
-package geekbrains.mariaL.kotlinapp.model
+package geekbrains.mariaL.kotlinapp.repo
+
+import geekbrains.mariaL.kotlinapp.model.FireStoreProvider
+import geekbrains.mariaL.kotlinapp.model.Note
+import geekbrains.mariaL.kotlinapp.providers.RemoteDataProvider
 
 object Repository {
     private val remoteProvider: RemoteDataProvider = FireStoreProvider()

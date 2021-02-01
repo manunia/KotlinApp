@@ -1,6 +1,8 @@
-package geekbrains.mariaL.kotlinapp.model
+package geekbrains.mariaL.kotlinapp.providers
 
 import androidx.lifecycle.LiveData
+import geekbrains.mariaL.kotlinapp.model.Note
+import geekbrains.mariaL.kotlinapp.model.NoteResult
 
 interface RemoteDataProvider {
 

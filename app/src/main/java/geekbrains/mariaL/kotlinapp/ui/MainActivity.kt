@@ -47,5 +47,4 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
         if (data == null) return
         adapter.notes = data
     }
-
 }
