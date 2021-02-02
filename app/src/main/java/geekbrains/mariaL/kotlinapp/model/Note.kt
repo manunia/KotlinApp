@@ -9,7 +9,6 @@ data class Note (
         val id: String = UUID.randomUUID().toString(),
         val title: String = "",
         val modifyDate: Date = Date(),
-        val summary: String = "",
         val note: String = "",
         val color: Color = Color.WHITE
 ) : Parcelable {

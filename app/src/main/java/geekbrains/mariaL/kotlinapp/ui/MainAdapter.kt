@@ -37,7 +37,7 @@ class MainAdapter(private val onClick: OnItemClickListener) : RecyclerView.Adapt
         fun bind(note: Note) {
             with(note) {
                 ui.title.text = this.title
-                ui.body.text = this.note
+                ui.body.text = this.note?.substring(0, note.note.length / 3)
 
                 val color = when(note?.color) {
                     Color.WHITE -> R.color.color_white
