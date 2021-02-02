@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import geekbrains.mariaL.kotlinapp.exceptions.NoAuthException
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.model.NoteResult
+import geekbrains.mariaL.kotlinapp.model.User
 import geekbrains.mariaL.kotlinapp.providers.RemoteDataProvider
 
 private const val NOTES_COLLECTION = "notes"
@@ -20,12 +21,6 @@ class FireStoreProvider : RemoteDataProvider {
     private val notesReferences = db.collection(NOTES_COLLECTION)
     private val currentUser
         get() = FirebaseAuth.getInstance().currentUser
-
-    private fun getUserNotesCollection() = currentUser?.let { user ->
-        db.collection(USERS_COLLECTION)
-            .document(user.uid)
-            .collection(NOTES_COLLECTION)
-    } ?: throw NoAuthException()
 
     override fun subscribeToAllNotes(): LiveData<NoteResult> =
         MutableLiveData<NoteResult>().apply {
@@ -69,5 +64,21 @@ class FireStoreProvider : RemoteDataProvider {
                     Log.d(TAG, "Error saving note $note, message: ${ex.message}")
                     value = NoteResult.Error(ex)
                 }
+        }
+
+    private fun getUserNotesCollection() = currentUser?.let { user ->
+        db.collection(USERS_COLLECTION)
+            .document(user.uid)
+            .collection(NOTES_COLLECTION)
+    } ?: throw NoAuthException()
+
+    override fun getCurrentUser() : LiveData<User?> =
+        MutableLiveData<User?>().apply {
+            value = currentUser?.let {
+                User(
+                    it.displayName ?: "",
+                    it.email ?: ""
+                )
+            }
         }
 }

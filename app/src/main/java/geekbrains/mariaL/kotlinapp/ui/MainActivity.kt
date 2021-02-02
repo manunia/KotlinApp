@@ -1,5 +1,7 @@
 package geekbrains.mariaL.kotlinapp.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.R
@@ -16,6 +18,7 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
             by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override val layoutRes: Int = R.layout.activity_main
+
     val adapter: MainAdapter by lazy {
         MainAdapter(object : OnItemClickListener {
             override fun onItemClick(note: Note) {
@@ -46,5 +49,9 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
     override fun renderData(data: List<Note>?) {
         if (data == null) return
         adapter.notes = data
+    }
+
+    companion object {
+        fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }
