@@ -11,9 +11,7 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.NoteRedactorBinding
-import geekbrains.mariaL.kotlinapp.model.Color
 import geekbrains.mariaL.kotlinapp.model.Note
-import geekbrains.mariaL.kotlinapp.model.Severity
 import geekbrains.mariaL.kotlinapp.viewmodel.NoteViewModel
 import java.util.*
 
@@ -67,7 +65,6 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
         note?.run {
             ui.title.setText(title)
             ui.note.setText(note)
-            ui.severity.setText(severity.getSeverity())
 
             ui.date.setText(modifyDate.format())
             ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
@@ -75,7 +72,6 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
         }
 
         ui.title.addTextChangedListener(textChangeListener)
-        ui.severity.addTextChangedListener(textChangeListener)
         ui.note.addTextChangedListener(textChangeListener)
     }
 
