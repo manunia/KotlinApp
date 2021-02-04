@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/palette"
+        android:title="@string/change_color_menu_title"
+        android:icon="@drawable/ic_baseline_format_paint_24"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/delete"
+        android:title="@string/delete_menu_title"
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="never"/>
+</menu>

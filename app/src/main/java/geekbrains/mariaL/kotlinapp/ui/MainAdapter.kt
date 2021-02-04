@@ -39,17 +39,7 @@ class MainAdapter(private val onClick: OnItemClickListener) : RecyclerView.Adapt
                 ui.title.text = this.title
                 ui.body.text = this.note?.substring(0, note.note.length / 3)
 
-                val color = when(note?.color) {
-                    Color.WHITE -> R.color.color_white
-                    Color.VIOLET -> R.color.color_violet
-                    Color.YELLOW -> R.color.color_yello
-                    Color.RED -> R.color.color_red
-                    Color.PINK -> R.color.color_pink
-                    Color.GREEN -> R.color.color_green
-                    Color.BLUE -> R.color.color_blue
-                }
-
-                itemView.setBackgroundResource(color)
+                ui.container.setCardBackgroundColor(note.color.getColorInt(itemView.context))
                 itemView.setOnClickListener { onClick.onItemClick(note) }
             }
         }

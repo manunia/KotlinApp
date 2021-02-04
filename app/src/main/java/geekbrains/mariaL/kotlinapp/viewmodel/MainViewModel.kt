@@ -1,5 +1,6 @@
 package geekbrains.mariaL.kotlinapp.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Observer
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.model.NoteResult
@@ -32,7 +33,8 @@ class MainViewModel(val repository: Repository = Repository) :
         repositoryNotes.observeForever(notesObserver)
     }
 
-    override fun onCleared() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    public override fun onCleared() {
         repositoryNotes.removeObserver(notesObserver)
     }
 

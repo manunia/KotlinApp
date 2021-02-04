@@ -7,17 +7,20 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.NoteRedactorBinding
+import geekbrains.mariaL.kotlinapp.model.Color
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.viewmodel.NoteViewModel
 import java.util.*
 
 private const val SAVE_DELAY = 2000L
 
-class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
+class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
     companion object {
         const val EXTRA_NOTE = "NoteRedactorActivity.extra.NOTE"
@@ -30,6 +33,7 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private var note: Note? = null
+    private var color: Color = Color.BLUE
     override val viewModel: NoteViewModel
             by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
     override val ui: NoteRedactorBinding
@@ -52,35 +56,46 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val noteId = intent.getStringExtra(EXTRA_NOTE)
-
-        if (noteId == null) supportActionBar?.title = getString(R.string.new_note_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         noteId?.let {
             viewModel.loadNote(it)
+        } ?: run {
+            supportActionBar?.title = getString(R.string.new_note_title)
         }
-
-        initView()
+        setEditListener()
     }
 
     private fun initView() {
         note?.run {
+            removeEditListener()
             ui.title.setText(title)
             ui.note.setText(note)
-
-            ui.date.setText(modifyDate.format())
-            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
+            setEditListener()
             supportActionBar?.title = modifyDate.format()
+            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
         }
-
-        ui.title.addTextChangedListener(textChangeListener)
-        ui.note.addTextChangedListener(textChangeListener)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean =
+        menuInflater.inflate(R.menu.menu_note, menu).let { true }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        android.R.id.home -> {
-            onBackPressed()
-            true
-        }
+        android.R.id.home -> super.onBackPressed().let { true }
+        R.id.palette -> togglePellete().let{ true }
+        R.id.delete -> deleteNote().let{ true }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun togglePellete() {
+
+    }
+
+    private fun deleteNote() {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.delete_note_message)
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("ОК") { _, _ -> viewModel.deleteNote() }
+            .show()
     }
 
     private fun triggerSaveNote() {
@@ -100,15 +115,28 @@ class NoteRedactorActivity : BaseActivity<Note?, NoteViewState>() {
         }, SAVE_DELAY)
     }
 
-    override fun renderData(data: Note?) {
-        note = data
+    override fun renderData(data: NoteViewState.Data) {
+        if (data.isDeleted) finish()
+
+        this.note = data.note
+        data?.note?.let { color = it.color }
+
         initView()
     }
 
     private fun createNewNote(): Note = Note(
         UUID.randomUUID().toString(),
         ui.title.text.toString()
-
     )
+
+    private fun setEditListener() {
+        ui.title.addTextChangedListener(textChangeListener)
+        ui.note.addTextChangedListener(textChangeListener)
+    }
+
+    private fun removeEditListener() {
+        ui.title.removeTextChangedListener(textChangeListener)
+        ui.note.removeTextChangedListener(textChangeListener)
+    }
 
 }

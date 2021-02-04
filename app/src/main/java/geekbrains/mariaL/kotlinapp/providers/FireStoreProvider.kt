@@ -72,7 +72,7 @@ class FireStoreProvider : RemoteDataProvider {
             .collection(NOTES_COLLECTION)
     } ?: throw NoAuthException()
 
-    override fun getCurrentUser() : LiveData<User?> =
+    override fun getCurrentUser(): LiveData<User?> =
         MutableLiveData<User?>().apply {
             value = currentUser?.let {
                 User(
@@ -81,4 +81,22 @@ class FireStoreProvider : RemoteDataProvider {
                 )
             }
         }
+
+    override fun deleteNote(noteId: String): LiveData<NoteResult> =
+        MutableLiveData<NoteResult>().apply {
+            try {
+                getUserNotesCollection()
+                    .document(noteId)
+                    .delete()
+                    .addOnSuccessListener {
+                        value = NoteResult.Success(null)
+                    }
+                    .addOnFailureListener {
+                        value = NoteResult.Error(it)
+                    }
+            } catch (e: Throwable) {
+                value = NoteResult.Error(e)
+            }
+        }
+
 }
