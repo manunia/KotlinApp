@@ -4,9 +4,7 @@ import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.providers.FireStoreProvider
 import geekbrains.mariaL.kotlinapp.providers.RemoteDataProvider
 
-object Repository {
-
-    private val remoteProvider: RemoteDataProvider = FireStoreProvider()
+class Repository(private val remoteProvider: RemoteDataProvider) {
 
     fun getNotes() = remoteProvider.subscribeToAllNotes()
     fun saveNote(note: Note) = remoteProvider.saveNote(note)

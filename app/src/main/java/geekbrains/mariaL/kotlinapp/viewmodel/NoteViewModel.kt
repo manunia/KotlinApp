@@ -7,7 +7,7 @@ import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.ui.NoteViewState
 
 
-class NoteViewModel(val repository: Repository = Repository) :
+class NoteViewModel(val repository: Repository) :
     BaseViewModel<NoteViewState.Data, NoteViewState>() {
 
     private val currentNote: Note?

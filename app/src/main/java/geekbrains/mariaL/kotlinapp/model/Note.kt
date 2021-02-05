@@ -6,11 +6,11 @@ import java.util.*
 
 @Parcelize
 data class Note (
-        val id: String = UUID.randomUUID().toString(),
+        val id: String = "",
         val title: String = "",
-        val modifyDate: Date = Date(),
         val note: String = "",
-        val color: Color = Color.WHITE
+        val color: Color = Color.RED,
+        val modifyDate: Date = Date()
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {

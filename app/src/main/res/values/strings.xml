@@ -20,7 +20,7 @@
     <string name="ok_bth_title">OK</string>
     <string name="logout_dialog_cancel">Cansel</string>
     <string name="change_color_menu_title">Change color</string>
-    <string name="delete_menu_title">Delete color</string>
+    <string name="delete_menu_title">Delete note</string>
     <string name="delete_note_title">Do you want delete?</string>
     <string name="delete_note_message">Confirm delete</string>
 </resources>

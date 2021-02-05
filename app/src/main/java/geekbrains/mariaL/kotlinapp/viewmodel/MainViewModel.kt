@@ -7,7 +7,7 @@ import geekbrains.mariaL.kotlinapp.model.NoteResult
 import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.ui.MainViewState
 
-class MainViewModel(val repository: Repository = Repository) :
+class MainViewModel(val repository: Repository) :
         BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResult> {

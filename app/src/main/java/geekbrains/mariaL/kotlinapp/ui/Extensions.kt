@@ -26,11 +26,5 @@ fun Color.getColorRes(): Int = when (this) {
     Color.BLUE -> R.color.color_blue
 }
 
-fun sortDeskAndDistinctIntAndRemoteNulls(list: List<Int?>?) : List<Int> =
-    list?.filterNotNull()
-        ?.distinct()
-        ?.sorted()
-        ?.reversed()
-        ?: listOf()
-
+fun Context.dip(value: Int) : Int = (value * resources.displayMetrics.density).toInt()
 

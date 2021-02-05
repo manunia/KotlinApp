@@ -8,6 +8,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +34,7 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     }
 
     private var note: Note? = null
-    private var color: Color = Color.BLUE
+    private var color: Color = Color.RED
     override val viewModel: NoteViewModel
             by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
     override val ui: NoteRedactorBinding
@@ -55,6 +56,7 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(ui.toolbar)
         val noteId = intent.getStringExtra(EXTRA_NOTE)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         noteId?.let {
@@ -62,18 +64,31 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
         } ?: run {
             supportActionBar?.title = getString(R.string.new_note_title)
         }
+        ui.colorPicker.onColorClickListener = {
+            color = it
+            setToolBarColor(it)
+            triggerSaveNote()
+        }
         setEditListener()
     }
 
     private fun initView() {
         note?.run {
             removeEditListener()
-            ui.title.setText(title)
-            ui.note.setText(note)
+            if (title != ui.title.text.toString()) {
+                ui.title.setText(title)
+            }
+            if (note != ui.note.text.toString()) {
+                ui.note.setText(note)
+            }
             setEditListener()
             supportActionBar?.title = modifyDate.format()
-            ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
+            setToolBarColor(color)
         }
+    }
+
+    private fun setToolBarColor(color : Color) {
+        ui.toolbar.setBackgroundColor(color.getColorInt(this@NoteRedactorActivity))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean =
@@ -81,13 +96,17 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> super.onBackPressed().let { true }
-        R.id.palette -> togglePellete().let{ true }
-        R.id.delete -> deleteNote().let{ true }
+        R.id.palette -> togglePallete().let { true }
+        R.id.delete -> deleteNote().let { true }
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun togglePellete() {
-
+    private fun togglePallete() {
+        if(ui.colorPicker.isOpen) {
+            ui.colorPicker.close()
+        } else {
+            ui.colorPicker.open()
+        }
     }
 
     private fun deleteNote() {
@@ -101,17 +120,15 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     private fun triggerSaveNote() {
         if (ui.title.text == null || ui.title.text!!.length < 3) return
 
-        Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
-            override fun run() {
-                note = note?.copy(
-                    title = ui.title.text.toString(),
-                    note = ui.note.text.toString(),
-                    modifyDate = Date()
-                ) ?: createNewNote()
+        Handler(Looper.getMainLooper()).postDelayed({
+            note = note?.copy(
+                title = ui.title.text.toString(),
+                note = ui.note.text.toString(),
+                color = color,
+                modifyDate = Date()
+            ) ?: createNewNote()
 
-                if (note != null) viewModel.saveChanges(note!!)
-            }
-
+            if (note != null) viewModel.saveChanges(note!!)
         }, SAVE_DELAY)
     }
 
@@ -126,7 +143,8 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
     private fun createNewNote(): Note = Note(
         UUID.randomUUID().toString(),
-        ui.title.text.toString()
+        ui.title.text.toString(),
+        ui.note.text.toString()
     )
 
     private fun setEditListener() {
@@ -139,4 +157,11 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
         ui.note.removeTextChangedListener(textChangeListener)
     }
 
+    override fun onBackPressed() {
+        if (ui.colorPicker.isOpen) {
+            ui.colorPicker.close()
+            return
+        }
+        super.onBackPressed()
+    }
 }

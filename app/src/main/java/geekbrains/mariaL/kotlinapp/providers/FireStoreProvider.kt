@@ -15,12 +15,14 @@ private const val NOTES_COLLECTION = "notes"
 private const val USERS_COLLECTION = "users"
 private val TAG = "${FireStoreProvider::class.java.simpleName} :"
 
-class FireStoreProvider : RemoteDataProvider {
+class FireStoreProvider(
+    private val fireBaseAuth: FirebaseAuth,
+    private val db: FirebaseFirestore
+) : RemoteDataProvider {
 
-    private val db = FirebaseFirestore.getInstance()
     private val notesReferences = db.collection(NOTES_COLLECTION)
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
+        get() = fireBaseAuth.currentUser
 
     override fun subscribeToAllNotes(): LiveData<NoteResult> =
         MutableLiveData<NoteResult>().apply {
