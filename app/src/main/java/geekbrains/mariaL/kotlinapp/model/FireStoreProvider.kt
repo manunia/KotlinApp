@@ -3,7 +3,6 @@ package geekbrains.mariaL.kotlinapp.model
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.FirebaseFirestore

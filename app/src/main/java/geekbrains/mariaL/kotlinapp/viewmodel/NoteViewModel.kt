@@ -1,16 +1,13 @@
 package geekbrains.mariaL.kotlinapp.viewmodel
 
-import androidx.lifecycle.ViewModel
-import geekbrains.mariaL.kotlinapp.databinding.NoteRedactorBinding
+import androidx.lifecycle.Observer
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.model.NoteResult
 import geekbrains.mariaL.kotlinapp.model.Repository
-import geekbrains.mariaL.kotlinapp.model.Severity
 import geekbrains.mariaL.kotlinapp.ui.NoteViewState
-import java.util.*
 
 
-class NoteViewModel(private val repository: Repository = Repository) :
+class NoteViewModel(val repository: Repository = Repository) :
         BaseViewModel<Note?, NoteViewState>() {
 
     private var pendingNote: Note? = null
@@ -20,9 +17,7 @@ class NoteViewModel(private val repository: Repository = Repository) :
     }
 
     override fun onCleared() {
-        if (pendingNote != null) {
-            repository.saveNote(pendingNote!!)
-        }
+        pendingNote?.let { repository.saveNote(it) }
     }
 
     fun loadNote(noteId: String) {

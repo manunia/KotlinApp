@@ -1,8 +1,5 @@
 package geekbrains.mariaL.kotlinapp.model
 
-import androidx.lifecycle.MutableLiveData
-import java.util.*
-
 object Repository {
     private val remoteProvider: RemoteDataProvider = FireStoreProvider()
 
