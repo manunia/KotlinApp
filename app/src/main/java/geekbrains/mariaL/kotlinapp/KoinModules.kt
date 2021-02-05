@@ -8,6 +8,8 @@ import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
 import geekbrains.mariaL.kotlinapp.viewmodel.NoteViewModel
 import geekbrains.mariaL.kotlinapp.viewmodel.SplashViewModel
+import org.koin.android.viewmodel.dsl.viewModel
+
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -17,16 +19,9 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() }
     single { FireStoreProvider(get(), get()) } bind RemoteDataProvider::class
     single { Repository(get()) }
+
+    viewModel { SplashViewModel(get())}
+    viewModel { MainViewModel(get())}
+    viewModel { NoteViewModel(get())}
 }
 
-val splasModule = module {
-    factory { SplashViewModel(get()) }
-}
-
-val mainModule = module {
-    factory { MainViewModel(get()) }
-}
-
-val noteModule = module {
-    factory { NoteViewModel(get()) }
-}

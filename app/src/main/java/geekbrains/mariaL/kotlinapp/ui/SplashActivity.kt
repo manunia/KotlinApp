@@ -11,6 +11,7 @@ import geekbrains.mariaL.kotlinapp.databinding.ActivitySplashBinding
 import geekbrains.mariaL.kotlinapp.exceptions.NoAuthException
 import geekbrains.mariaL.kotlinapp.viewmodel.SplashViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val RC_SIGN_IN = 458
 private const val START_DELAY = 1000L
@@ -18,7 +19,7 @@ private const val START_DELAY = 1000L
 class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
     override val viewModel: SplashViewModel
-            by inject()
+            by viewModel()
 
     override val ui: ActivitySplashBinding
             by lazy { ActivitySplashBinding.inflate(layoutInflater) }

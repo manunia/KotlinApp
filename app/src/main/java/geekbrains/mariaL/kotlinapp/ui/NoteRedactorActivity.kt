@@ -8,15 +8,14 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.NoteRedactorBinding
 import geekbrains.mariaL.kotlinapp.model.Color
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.viewmodel.NoteViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 private const val SAVE_DELAY = 2000L
@@ -36,7 +35,7 @@ class NoteRedactorActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     private var note: Note? = null
     private var color: Color = Color.RED
     override val viewModel: NoteViewModel
-            by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+            by viewModel()
     override val ui: NoteRedactorBinding
             by lazy { NoteRedactorBinding.inflate(layoutInflater) }
     override val layoutRes: Int = R.layout.note_redactor
