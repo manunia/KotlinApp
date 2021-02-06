@@ -19,9 +19,16 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() }
     single { FireStoreProvider(get(), get()) } bind RemoteDataProvider::class
     single { Repository(get()) }
-
-    viewModel { SplashViewModel(get())}
-    viewModel { MainViewModel(get())}
-    viewModel { NoteViewModel(get())}
 }
 
+val splashModule = module {
+    viewModel { SplashViewModel(get())}
+}
+
+val mainModule = module {
+    viewModel { MainViewModel(get())}
+}
+
+val noteModule = module {
+    viewModel { NoteViewModel(get())}
+}

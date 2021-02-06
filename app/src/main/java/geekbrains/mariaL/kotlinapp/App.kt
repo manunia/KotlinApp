@@ -7,7 +7,7 @@ class App: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(appModule, splasModule, mainModule, noteModule)
+            modules(appModule, splashModule, mainModule, noteModule)
         }
     }
 }
