@@ -3,7 +3,7 @@ package geekbrains.mariaL.kotlinapp.viewmodel
 import androidx.lifecycle.Observer
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.model.NoteResult
-import geekbrains.mariaL.kotlinapp.model.Repository
+import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.ui.NoteViewState
 
 

@@ -24,13 +24,13 @@ abstract class BaseActivity<T, VS : BaseViewState<T>> : AppCompatActivity() {
         }
     }
 
-    protected fun renderError(error: Throwable) {
+    protected open fun renderError(error: Throwable) {
         error.message?.let { showError(it) }
     }
 
     abstract fun renderData(data: T)
 
-    protected fun showError(error: String) {
+    protected open fun showError(error: String) {
         MyAlertDialogBuilder(this, "Error!", error).build()
     }
 }

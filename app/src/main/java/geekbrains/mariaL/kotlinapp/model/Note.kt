@@ -8,9 +8,7 @@ import java.util.*
 data class Note (
         val id: String = UUID.randomUUID().toString(),
         val title: String = "",
-        val severity: Severity = Severity.MIDDLE,
         val modifyDate: Date = Date(),
-        val summary: String = "",
         val note: String = "",
         val color: Color = Color.WHITE
 ) : Parcelable {
@@ -32,7 +30,6 @@ data class Note (
 
 }
 
-
 enum class Color {
     WHITE,
     YELLOW,
@@ -42,11 +39,3 @@ enum class Color {
     VIOLET,
     PINK
 }
-
- enum class Severity {
-     WERY_HIGHT,
-     HIGHT,
-     MIDDLE,
-     LOW,
-     NOT_MATTER
- }
