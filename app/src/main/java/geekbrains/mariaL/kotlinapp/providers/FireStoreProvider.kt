@@ -28,6 +28,7 @@ class FireStoreProvider(
         MutableLiveData<NoteResult>().apply {
 
             try {
+                Log.d(TAG, "subscribe")
                 notesReferences.addSnapshotListener { snapshot, error ->
                     value = error?.let { NoteResult.Error(it) }
                         ?: snapshot?.let { query ->
