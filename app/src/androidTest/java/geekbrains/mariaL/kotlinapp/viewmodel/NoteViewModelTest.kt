@@ -3,7 +3,7 @@ package geekbrains.mariaL.kotlinapp.viewmodel
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
@@ -13,6 +13,7 @@ import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.ui.NoteRedactorActivity
 import geekbrains.mariaL.kotlinapp.ui.NoteViewState
 import io.mockk.*
+import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
 
@@ -67,5 +68,36 @@ class NoteViewModelTest {
         onView(withId(R.id.palette)).perform(click())
 
         onView(withId(R.id.color_picker)).check(matches(isCompletelyDisplayed()))
+    }
+
+    @Test
+    fun should_hide_color_picker() {
+        onView(withId(R.id.palette)).perform(click()).perform(click())
+
+        onView(withId(R.id.color_picker)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun should_call_viewmodel_loadNote() {
+        verify(exactly = 1) {
+            viewModel.loadNote(testNote.id)
+        }
+    }
+
+    @Test
+    fun should_show_note() {
+        activityTestRule.launchActivity(null)
+        viewStateLiveData.postValue(NoteViewState(NoteViewState.Data(note = testNote)))
+
+        onView(withId(R.id.title)).check(matches(withText(testNote.title)))
+        onView(withId(R.id.note)).check(matches(withText(testNote.note)))
+    }
+
+    @Test
+    fun should_add_new_note() {
+        onView(withId(R.id.title)).perform(typeText("test title"))
+        onView(withId(R.id.note)).perform(typeText("test note"))
+        closeSoftKeyboard()
+        verify(timeout = 1000) { viewModel.saveChanges(any()) }
     }
 }
