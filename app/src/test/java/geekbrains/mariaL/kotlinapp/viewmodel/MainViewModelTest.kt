@@ -56,4 +56,10 @@ class MainViewModelTest {
         noteLiveData.value = NoteResult.Success(testData)
         assertEquals(testData, result)
     }
+
+    @Test
+    fun `should remove observer`() {
+        viewModel.onCleared()
+        assertFalse(noteLiveData.hasObservers())
+    }
 }
