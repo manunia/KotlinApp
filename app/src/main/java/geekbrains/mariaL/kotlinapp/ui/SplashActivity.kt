@@ -2,18 +2,16 @@ package geekbrains.mariaL.kotlinapp.ui
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import geekbrains.mariaL.kotlinapp.R
-import geekbrains.mariaL.kotlinapp.databinding.ActivityMainBinding
 import geekbrains.mariaL.kotlinapp.databinding.ActivitySplashBinding
 import geekbrains.mariaL.kotlinapp.exceptions.NoAuthException
-import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
 import geekbrains.mariaL.kotlinapp.viewmodel.SplashViewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val RC_SIGN_IN = 458
 private const val START_DELAY = 1000L
@@ -21,7 +19,7 @@ private const val START_DELAY = 1000L
 class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
     override val viewModel: SplashViewModel
-            by lazy { ViewModelProvider(this).get(SplashViewModel::class.java) }
+            by viewModel()
 
     override val ui: ActivitySplashBinding
             by lazy { ActivitySplashBinding.inflate(layoutInflater) }

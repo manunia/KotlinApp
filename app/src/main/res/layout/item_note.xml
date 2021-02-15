@@ -7,6 +7,7 @@
     android:layout_marginStart="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:id="@+id/container"
     tools:backgroundTint="@android:color/holo_purple">
 
     <LinearLayout

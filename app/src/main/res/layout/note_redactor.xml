@@ -13,8 +13,18 @@
             android:id="@+id/toolbar"
             app:layout_scrollFlags="scroll|enterAlways"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:scrollbars="none">
+
+            <geekbrains.mariaL.kotlinapp.ui.custom.ColorPickerView
+                android:id="@+id/color_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"/>
+        </HorizontalScrollView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

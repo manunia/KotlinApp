@@ -4,7 +4,7 @@ import geekbrains.mariaL.kotlinapp.exceptions.NoAuthException
 import geekbrains.mariaL.kotlinapp.repo.Repository
 import geekbrains.mariaL.kotlinapp.ui.SplashViewState
 
-class SplashViewModel(private val repositoty: Repository = Repository) :
+class SplashViewModel(private val repositoty: Repository) :
     BaseViewModel<Boolean?, SplashViewState>() {
 
     fun requestUser() {

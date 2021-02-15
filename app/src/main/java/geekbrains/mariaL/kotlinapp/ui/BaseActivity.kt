@@ -2,7 +2,6 @@ package geekbrains.mariaL.kotlinapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import geekbrains.mariaL.kotlinapp.viewmodel.BaseViewModel
 

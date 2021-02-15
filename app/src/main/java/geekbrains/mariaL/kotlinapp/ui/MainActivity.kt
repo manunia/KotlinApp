@@ -12,11 +12,12 @@ import geekbrains.mariaL.kotlinapp.R
 import geekbrains.mariaL.kotlinapp.databinding.ActivityMainBinding
 import geekbrains.mariaL.kotlinapp.model.Note
 import geekbrains.mariaL.kotlinapp.viewmodel.MainViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<List<Note>?, MainViewState>(), LogoutDialog.LogoutListener {
 
     override val viewModel: MainViewModel
-            by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+            by viewModel()
 
     override val ui: ActivityMainBinding
             by lazy { ActivityMainBinding.inflate(layoutInflater) }
